@@ -1,0 +1,45 @@
+GoRequest
+A Simplified Http Client
+30 May 2014
+
+Theeraphol Wattanavekin
+Rakuten, Inc.
+@parnurzeal
+http://www.parnurzeal.com
+
+* About Me
+
+- Originally from Bangkok, Thailand
+- Currently, working in Rakuten, Inc. as infrastructure developer 
+
+* GoRequest
+
+* Motivation
+
+- Simpler http client (similar to Node.js SuperAgent)
+- Cleaner and maintainable code
+- Fun! (Learn and PoC idea)
+
+* Features
+GoRequest is currently supporting many features:
+
+- Get/Post/Put/Head/Delete
+- Set - simple header setting
+- JSON - made it simple with JSON string as a parameter
+- Proxy - sending request via proxy
+- Timeout - setting timeout for a request
+- more coming soon..
+
+* GET Request
+Go standard lib:
+  
+  resp, err := http.Get("http://example.com/")
+
+GoRequest:
+
+  request := gorequest.New()
+  resp, body, errs := request.Get("http://example.com/").End()
+
+Or below if you don't want to reuse it for other requests.
+
+  resp, body, errs := gorequest.New().Get("http://example.com/").End()
