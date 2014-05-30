@@ -1,18 +1,21 @@
 GoRequest
-A Simplified Http Client
+A Simplified Http Client 
 30 May 2014
 
 Theeraphol Wattanavekin
 Rakuten, Inc.
 @parnurzeal
 http://www.parnurzeal.com
+http://github.com/parnurzeal/gorequest
 
 * About Me
 
+* Theeraphol Wattanavekin -> A
 - Originally from Bangkok, Thailand
-- Currently, working in Rakuten, Inc. as infrastructure developer 
+- Currently, working in Rakuten, Inc. - An infrastructure developer 
 
-* GoRequest
+
+* GoRequest 
 
 * Motivation
 
@@ -31,11 +34,11 @@ GoRequest is currently supporting many features:
 - more coming soon..
 
 * GET Request
-Go standard lib:
+- Go standard lib:
   
   resp, err := http.Get("http://example.com/")
 
-GoRequest:
+- GoRequest:
 
   request := gorequest.New()
   resp, body, errs := request.Get("http://example.com/").End()
@@ -43,3 +46,73 @@ GoRequest:
 Or below if you don't want to reuse it for other requests.
 
   resp, body, errs := gorequest.New().Get("http://example.com/").End()
+
+* JSON Post Request
+
+- Go standard lib:
+
+.code examples/go_postjson.go
+
+* JSON Post Request
+
+- GoRequest:
+
+.code examples/gorequest_postjson.go
+
+- Detect JSON and set content-type to json
+- Marshal it and Send body request as JSON format
+
+* Form Request
+
+- GoRequest:
+
+  request := gorequest.New()
+  resp, body, errs := request.Post("http://example.com").Send("query=tonkatsu").End()
+
+- Detect query string for form and set content-type to x-www-form-urlencoded
+- Send it as correct body request format ( param1=value1&param2=value2 )
+
+* Proxy
+
+- GoRequest:
+
+  request := gorequest.New().Proxy("http://proxy:999")
+  resp, body, errs := request.Get("http://example-proxy.com").End()
+
+To reuse same client with no_proxy, use empty string:
+
+  resp, body, errs = request.Proxy("").("http://example-no-proxy.com").End()
+
+* Timeout
+
+- GoRequest:
+
+  request := gorequest.New().Timeout(2*time.Millisecond)
+  resp, body, errs := request.Get("http://example.com").End()
+
+* Callback
+
+- GoRequest (not callback):
+
+  resp, body, errs := gorequest.New().Get("http://example.com").End(printBody) 
+  fmt.Println(resp.Status) 
+
+- GoRequest (callback):
+
+  func printBody(resp gorequest.Response, body string, errs []error){
+    fmt.Println(resp.Status)
+  }
+  gorequest.New().Get("http://example.com").End(printBody) 
+
+* Future work
+
+Currently, supporting many other features than showing in slides 
+
+- Check it out: github.com/parnurzeal/gorequest
+
+Future features include:
+
+- Cookies
+- Retry
+- Basic auth
+- ... much more
